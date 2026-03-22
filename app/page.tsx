@@ -127,7 +127,7 @@ export default function Home() {
         >
           {/* Title */}
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1.5">Title</label>
+            <label className="block text-sm font-medium text-gray-400 mb-1.5">Title</label>
             <input
               type="text"
               placeholder="e.g. The best Figma shortcuts"
@@ -139,7 +139,7 @@ export default function Home() {
 
           {/* URL */}
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1.5">URL</label>
+            <label className="block text-sm font-medium text-gray-400 mb-1.5">URL</label>
             <input
               type="text"
               placeholder="https://"
@@ -153,7 +153,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Tag */}
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">Tag</label>
+              <label className="block text-sm font-medium text-gray-400 mb-1.5">Tag</label>
               <select
                 value={form.tag}
                 onChange={e => setForm(f => ({ ...f, tag: e.target.value as Resource['tag'] }))}
@@ -169,7 +169,7 @@ export default function Home() {
 
             {/* Your name */}
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">Your name</label>
+              <label className="block text-sm font-medium text-gray-400 mb-1.5">Your name</label>
               <input
                 type="text"
                 placeholder="e.g. Ankita"
