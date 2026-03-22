@@ -42,6 +42,14 @@ export default function Home() {
   // status tracks what's happening: idle / submitting / error message
   const [status, setStatus] = useState<'idle' | 'submitting' | string>('idle')
 
+  // activeTag filters the feed — null means "All"
+  const [activeTag, setActiveTag] = useState<Resource['tag'] | null>(null)
+
+  // filtered is derived from resources — no extra fetch needed
+  const filtered = activeTag ? resources.filter(r => r.tag === activeTag) : resources
+
+  const TAGS: Resource['tag'][] = ['design', 'product', 'tech', 'career', 'general']
+
   // --- Fetch all resources on first load ---
   // useEffect with [] runs once when the page first opens,
   // like an "on mount" event. We use it to load existing data.
@@ -187,17 +195,44 @@ export default function Home() {
           </button>
         </form>
 
+        {/* ── Tag filters ── */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          <button
+            onClick={() => setActiveTag(null)}
+            className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
+              activeTag === null
+                ? 'bg-gray-100 text-gray-900'
+                : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            All
+          </button>
+          {TAGS.map(tag => (
+            <button
+              key={tag}
+              onClick={() => setActiveTag(tag === activeTag ? null : tag)}
+              className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
+                activeTag === tag
+                  ? TAG_STYLES[tag]
+                  : 'text-gray-500 hover:text-gray-300'
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
         {/* ── Feed ── */}
         <div className="space-y-3">
           {/* Empty state — shown when there are no resources yet */}
-          {resources.length === 0 && (
+          {filtered.length === 0 && (
             <div className="text-center text-gray-600 py-16 text-sm">
-              No resources yet. Be the first to drop one.
+              {activeTag ? `No ${activeTag} resources yet.` : 'No resources yet. Be the first to drop one.'}
             </div>
           )}
 
           {/* Resource cards */}
-          {resources.map(r => (
+          {filtered.map(r => (
             <div
               key={r.id}
               className="bg-gray-900 border border-gray-800 rounded-xl px-5 py-4 hover:border-gray-700 transition-colors"
